@@ -1,0 +1,21 @@
+{% load static %}
+<link rel="shortcut icon" href="{% static 'favicon.png' %}"/>
+<title>MechBot | Alerts for {{user.username}}</title>
+<h3>r/MechMarket Alerts for <u>{{user.username}}</u>, <img src="https://cdn.discordapp.com/avatars/{{user.id}}/{{user.avatar}}.png" width="32" height="32" style="float:right"></h3> 
+
+<hr>
+
+<p>MechBot will DM you on discord whenever a post is submitted on <a href="https://reddit.com/r/mechmarket">r/MechMarket</a> matching one of your alerts.</p>
+<p>Before you can receive DMs from MechBot, you have to join the <a href="discord">Discord server</a> and <b>allow direct messages from members</b> in the server Privacy Settings. There's also more detailed inctructions on the server.</p>
+
+<a href="/mechbot/new_alert">New Alert</a>
+
+{% if alerts %}
+    <ul>
+    {% for alert in alerts %}
+        <li><a href="{% url 'update_alert' alert.id %}">Edit</a> | <a href="{% url 'delete_alert' alert.id %}">Delete</a> | <b>Origin:</b> {% if alert.origin %}{{alert.origin}}{% else %} <i>Any</i>{% endif %} | <b>[H]</b> {% if alert.has %}{{alert.has}}{% else %} <i>Any</i>{% endif %} <b>[W]</b> {% if alert.wants %}{{alert.wants}}{% else %} <i>Any</i>{% endif %} <i><b>{{alert.enabled|yesno:",(Disabled)"}}</i></b></li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No alerts are set.</p>
+{% endif %}
