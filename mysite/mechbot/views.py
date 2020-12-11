@@ -10,8 +10,6 @@ from django.conf import settings
 
 # Create your views here.
 DISCORD_SERVER_INVITE = "https://discord.gg/bjUB2FnCE5"
-BASE_URL = "https://" + settings.MECHBOT_URL + "/"
-
 
 @login_required(login_url="/mechbot/oauth2/login",)
 def index(request: HttpRequest):
@@ -97,7 +95,7 @@ def exchange_code(code: str):
         "client_secret": settings.DISCORD_CLIENT_SECRET,
         "grant_type": "authorization_code",
         "code": code,
-        "redirect_uri": BASE_URL + "mechbot/oauth2/login/redirect",
+        "redirect_uri": settings.AUTH_REDIRECT_URL,
         "scope": "identify"
     }
     headers = {

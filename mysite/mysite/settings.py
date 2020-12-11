@@ -18,7 +18,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Custom Environment variables used in views from .env 
 # file which should reside in this same directory
-MECHBOT_URL = os.getenv('MECHBOT_URL')
+AUTH_REDIRECT_URL = os.getenv('AUTH_REDIRECT_URL')
 AUTH_URL_DISCORD = os.getenv('AUTH_URL_DISCORD')
 DISCORD_CLIENT_ID = os.getenv('DISCORD_CLIENT_ID')
 DISCORD_CLIENT_SECRET = os.getenv('DISCORD_CLIENT_SECRET')
@@ -32,7 +32,7 @@ SECRET_KEY = os.getenv('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = [MECHBOT_URL] # 45.33.73.133
+ALLOWED_HOSTS = [os.getenv('HOST_URL')] # 45.33.73.133
 
 CSRF_COOKIE_SECURE = True
 SESSION_COOKIE_SECURE = True
