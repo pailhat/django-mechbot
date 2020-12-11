@@ -11,7 +11,6 @@ from django.conf import settings
 # Create your views here.
 DISCORD_SERVER_INVITE = "https://discord.gg/bjUB2FnCE5"
 BASE_URL = "https://" + settings.MECHBOT_URL + "/"
-auth_url_discord = settings.AUTH_URL_DISCORD
 
 
 @login_required(login_url="/mechbot/oauth2/login",)
@@ -81,7 +80,7 @@ def delete_alert(request, pk):
     return render(request, 'mechbot/delete_alert.html', context)
 
 def discord_login(request: HttpRequest):
-    return redirect(auth_url_discord)
+    return redirect(settings.AUTH_URL_DISCORD)
 
 def discord_login_redirect(request: HttpRequest):
     code = request.GET.get('code')
