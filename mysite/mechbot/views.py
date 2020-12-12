@@ -11,7 +11,7 @@ from django.conf import settings
 # Create your views here.
 DISCORD_SERVER_INVITE = "https://discord.gg/bjUB2FnCE5"
 
-@login_required(login_url="/mechbot/oauth2/login",)
+@login_required(login_url="oauth2_login",)
 def index(request: HttpRequest):
     print(request.user)
     user = request.user
@@ -24,7 +24,7 @@ def index(request: HttpRequest):
     return render(request, 'mechbot/index.html', context)
 
 
-@login_required(login_url="/mechbot/oauth2/login",)
+@login_required(login_url="oauth2_login",)
 def new_alert(request: HttpRequest):
     user = request.user
     print(user)
@@ -35,19 +35,19 @@ def new_alert(request: HttpRequest):
         form.instance.user_id = user
         if form.is_valid():
             form.save()
-            return redirect("/mechbot")
+            return redirect("mechbot_main")
     context = {"form": form, "title": title}
     return render(request, 'mechbot/alert_form.html', context)
 
 
-@login_required(login_url="/mechbot/oauth2/login",)
+@login_required(login_url="oauth2_login",)
 def update_alert(request, pk):
     alert = Alert.objects.get(id=pk)
     print("Compared:")
     print(alert.user_id)
     print(request.user)
     if str(alert.user_id) != str(request.user):
-        return redirect("/mechbot")
+        return redirect("mechbot_main")
 
     form = AlertFormUpdate(instance=alert)
     title = "Edit MechMarket Alert"
@@ -55,11 +55,11 @@ def update_alert(request, pk):
         form = AlertFormUpdate(request.POST, instance=alert)
         if form.is_valid():
             form.save()
-            return redirect("/mechbot")
+            return redirect("mechbot_main")
     context = {"form": form,"title": title}
     return render(request, 'mechbot/alert_form.html', context)
 
-@login_required(login_url="/mechbot/oauth2/login",)
+@login_required(login_url="oauth2_login",)
 def delete_alert(request, pk):
     alert = Alert.objects.get(id=pk)
     print("Compared:")
@@ -67,12 +67,12 @@ def delete_alert(request, pk):
     print(request.user)
     
     if str(alert.user_id) != str(request.user):
-        return redirect("/mechbot")
+        return redirect("mechbot_main")
 
     title = "Delete MechMarket Alert"
     if request.method == 'POST':
         alert.delete()
-        return redirect("/mechbot")
+        return redirect("mechbot_main")
 
     context = {"alert": alert, "title" : title}
     return render(request, 'mechbot/delete_alert.html', context)
@@ -87,7 +87,7 @@ def discord_login_redirect(request: HttpRequest):
     discord_user = authenticate(request, user=user)
     print(discord_user)
     login(request, discord_user)
-    return redirect("/mechbot")
+    return redirect("mechbot_main")
 
 def exchange_code(code: str):
     data =  {

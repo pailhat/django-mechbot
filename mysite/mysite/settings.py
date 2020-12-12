@@ -22,6 +22,7 @@ AUTH_REDIRECT_URL = os.getenv('AUTH_REDIRECT_URL')
 AUTH_URL_DISCORD = os.getenv('AUTH_URL_DISCORD')
 DISCORD_CLIENT_ID = os.getenv('DISCORD_CLIENT_ID')
 DISCORD_CLIENT_SECRET = os.getenv('DISCORD_CLIENT_SECRET')
+HOST_URL_MECHBOT = os.getenv('HOST_URL_MECHBOT')
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
@@ -30,9 +31,13 @@ DISCORD_CLIENT_SECRET = os.getenv('DISCORD_CLIENT_SECRET')
 SECRET_KEY = os.getenv('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = [os.getenv('HOST_URL')] # 45.33.73.133
+ALLOWED_HOSTS = [os.getenv('HOST_URL'), HOST_URL_MECHBOT]
+
+ROOT_HOSTCONF = 'mysite.hosts'
+
+DEFAULT_HOST = 'root'
 
 CSRF_COOKIE_SECURE = True
 SESSION_COOKIE_SECURE = True
@@ -53,10 +58,12 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'mechbot.apps.MechbotConfig'
+    'mechbot.apps.MechbotConfig',
+    'django_hosts'
 ]
 
 MIDDLEWARE = [
+    'django_hosts.middleware.HostsRequestMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -64,6 +71,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django_hosts.middleware.HostsResponseMiddleware'
 ]
 
 ROOT_URLCONF = 'mysite.urls'
