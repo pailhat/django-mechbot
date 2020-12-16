@@ -4,6 +4,7 @@ from . import views
 
 urlpatterns = [
     path('', views.index, name='mechbot_main'),
+    path('docs', views.mechbot_docs, name='mechbot_docs'),
     path('new_alert/', views.new_alert, name='new_alert'),
     path('discord/', views.discord_server_redirect, name='discord_server_redirect'),
     path('update_alert/<str:pk>/', views.update_alert, name='update_alert'),

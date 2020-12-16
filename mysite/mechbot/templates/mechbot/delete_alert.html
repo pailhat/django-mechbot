@@ -1,18 +1,57 @@
-{% load static %}
-<link rel="shortcut icon" href="{% static 'favicon.png' %}"/>
+{% extends 'mechbot/base.html' %} 
+{% block 'body' %}
 
-<title>MechBot | {{ title }}</title>
-<h3>{{ title }}<img src="https://cdn.discordapp.com/avatars/{{user.id}}/{{user.avatar}}.png" width="32" height="32" style="float:right"></h3>
-<hr>
+<section class="section">
+    <div class="container">
+        <div class="card">
+            <div class="card-content">
+                <div class="columns">
+                    <div class="column is-vcentered has-text-centered bd-notification">
+                        <p class="subtitle">
+                            <code>Origin</code>
+                        </p>
+                        <div class="content">
+                            {% if alert.origin %}{{alert.origin}}{% else %} <i>Any</i>{% endif %}
+                        </div>
+                    </div>
+                    <div class="column is-vcentered has-text-centered">
+                        <p class="subtitle">
+                            <code>[H]</code>
+                        </p>
+                        <div class="content">
+                            {% if alert.has %}{{alert.has}}{% else %} <i>Any</i>{% endif %}
+                        </div>
+                    </div>
+                    <div class="column is-vcentered has-text-centered">
+                        <p class="subtitle">
+                            <code>[W]</code>
+                        </p>
+                        <div class="content">
+                            {% if alert.wants %}{{alert.wants}}{% else %} <i>Any</i>{% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="section">
+    <div class="container">       
+            <form action="{% url 'delete_alert' alert.id  %}" method="POST">
+                {% csrf_token %}
+                <div class="columns">
+                    <div class="column">
+                        <a class="button is-danger is-fullwidth is-medium" href="{% url 'mechbot_main' %}">Cancel</a>
+                    </div>
+                    <div class="column">
+                        <input class="button is-primary is-fullwidth is-medium" type="submit" value="Confirm">
+                    </div>    
+                </div>          
+            </form>  
+        </div>
 
-<p>Are you sure you want to delete this Alert?</p>
-<p><b>Origin:</b> {{ alert.origin}} | <b>[H]</b> {{ alert.has }} <b>[W]</b> {{ alert.wants }}</p>
+    </div>
+</section>
 
-<form action="{% url 'delete_alert' alert.id  %}" method="POST">
-    
-    {% csrf_token %}
 
-    <a class="btn btn-warning" href="{% url 'landing' %}">Cancel</a>
-
-    <input class="btn btn-danger" type="submit" name="Confirm">
-</form>
+{% endblock %}

@@ -23,7 +23,8 @@ AUTH_URL_DISCORD = os.getenv('AUTH_URL_DISCORD')
 DISCORD_CLIENT_ID = os.getenv('DISCORD_CLIENT_ID')
 DISCORD_CLIENT_SECRET = os.getenv('DISCORD_CLIENT_SECRET')
 HOST_URL_MECHBOT = os.getenv('HOST_URL_MECHBOT')
-
+HOST_URL = os.getenv('HOST_URL')
+ALERT_LIMIT = 10
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
@@ -31,9 +32,9 @@ HOST_URL_MECHBOT = os.getenv('HOST_URL_MECHBOT')
 SECRET_KEY = os.getenv('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
-ALLOWED_HOSTS = [os.getenv('HOST_URL'), HOST_URL_MECHBOT]
+ALLOWED_HOSTS = [HOST_URL, HOST_URL_MECHBOT]
 
 ROOT_HOSTCONF = 'mysite.hosts'
 

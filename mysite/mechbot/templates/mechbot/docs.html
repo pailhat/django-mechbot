@@ -1,0 +1,91 @@
+{% extends 'mechbot/base.html' %}
+{% block 'body' %}
+<section class="section">
+    <div class="container is-centered">
+        <div class="columns is-centered is-mobile">
+            <div class="columns">
+                <figure class="image is-128x128">
+                    <img class="is-rounded is-centered"
+                        src="https://media.tenor.com/images/2f071cab07e5ddac7224f1ff3d8cccf2/tenor.gif">
+                </figure>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="section">
+    <div class="container">
+        <p class="content is-medium"> MechBot is a Discord bot that helps you find things you're looking for on
+            <a target="_blank" href="https://www.reddit.com/r/mechmarket/">reddit.com/r/mechmarket/</a> by filtering new
+            posts based on alerts that you set up. You'll
+            recieve a DM on Discord from MechBot as soon as anything you're interested in is posted.</p>
+        <p class="title is-large has-text-centered">Getting Started</p>
+        <div class="notification is-success has-text-centered is-medium">
+            Before you can receive DMs from MechBot, you have to join the <a
+                href="{% url 'discord_server_redirect' %}">Discord server</a> and <b>allow
+                direct messages from members</b> in the server Privacy Settings.<br>(It's a Discord thing meant to prevent spam.)
+        </div>
+        <br>
+        <div class="content">
+            <div class="columns is-centered">
+                <div class="buttons is-centered">
+                    {% if not authenticated %}
+                    <a href="{% url 'oauth2_login' %}" class="button is-light is-large">
+                        <span class="icon is-large">
+                            <i class="fab fa-discord"></i>
+                        </span>
+                        <span>Log in with Discord</span>
+                    </a>
+                    {% endif %}
+                    <a href="{% url 'discord_server_redirect' %}" class="button is-dark is-large">
+                        <span class="icon is-large">
+                            <i class="fab fa-discord"></i>
+                        </span>
+                        <span>Join MechBot's Discord Server</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <br>
+        <p class="title is-large has-text-centered">Creating an Alert</p>
+        <p class="content is-medium">With each Alert, you are filtering new
+            <code>Buying</code>/<code>Selling</code>/<code>Trading</code> posts from r/MechMarket
+            that MechBot will DM to you. You can see real examples of how post titles are formatted on <a
+                target="_blank" href="https://www.reddit.com/r/mechmarket/new">r/MechMarket/new</a>.</p>
+        <p class="content is-medium">When adding an Alert for yourself you need to specify your filters for Origin, Has
+            [H],
+            and Wants [W].</p>
+        <p class="content is-medium"><u><b>Origin:</b></u> Location portion of the title.
+            E.g. <code>[US-NY]</code>, partials also work: <code>[US-</code>, or you can leave it blank to include all
+            origins.
+        </p>
+        <p class="content is-medium"><u><b>Has [H]:</b></u> Enter the item you're looking for if you're trying to buy
+            something. Enter a payment method like PayPal if you're trying to sell something. Leave blank to consider
+            all items/payment methods (no filter).
+        </p>
+        <p class="content is-medium"><u><b>Wants [W]:</b></u> Enter the item you're trying to sell if you are looking
+            for buyers. Enter a payment method you have like PayPal if you're trying to buy something. Leave blank to
+            consider all items/payment methods (no filter).</p>
+        <p class="content is-medium"><b>Up to 1 item in Has [H] and 1 item in Wants [W] per alert.</b> This is because bot
+            searches the appropriate section of the post title for the exact strings you entered to determine if it's a match.
+            If you put multiple items in like <code>GMK DMG, GMK Olivia</code> for example, unless the post title had
+            that text exactly you would not get an alert. In that case you should make one alert for <code>DMG</code>
+            and another for <code>Olivia</code>.</p>
+        <p class="content is-medium"><b>Alerts are not case sensitive</b> so don't worry about matching the text case
+            exactly.
+        </p>
+        <p class="content is-medium"><b><i>Important:</i></b> Look for previous listings of items you're looking for and
+            tailor your
+            Alert to how people generally format their titles.</p>
+        <p class="content is-medium">For example, someone selling multiple GMK sets might include them in their title as
+            something like <code>GMK sets
+            (Olivia++ Dark Base, DMG R2 Base, Fuyu Base)</code>. In that case an alert for <code>GMK Olivia++</code>
+            would not match, so
+            a better alert would be just <code>Olivia++</code>.</p>
+
+
+    </div>
+</section>
+
+
+{% endblock %}

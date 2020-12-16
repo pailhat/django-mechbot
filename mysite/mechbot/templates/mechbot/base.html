@@ -1,0 +1,94 @@
+{% load static %}
+<!DOCTYPE html>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>MechBot | {{ title }}</title>
+    <link rel="stylesheet" href="https://unpkg.com/bulmaswatch/superhero/bulmaswatch.min.css">
+    <script src="https://kit.fontawesome.com/df8210601d.js" crossorigin="anonymous"></script>
+    <link rel="shortcut icon" href="{% static 'favicon.png' %}" />
+</head>
+
+<body>
+    <nav class="navbar" role="navigation" aria-label="main navigation">
+        <div class="navbar-brand">
+            <a class="navbar-item" href="{% url 'mechbot_main' %}">
+                <img src="https://media.tenor.com/images/2f071cab07e5ddac7224f1ff3d8cccf2/tenor.gif">
+            </a>
+
+            <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasic">
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+            </a>
+        </div>
+
+        <div id="navbarBasic" class="navbar-menu">
+            <div class="navbar-start">
+                {% if authenticated %}
+                <a href="{% url 'mechbot_main' %}" class="navbar-item">
+                    <span class="icon">
+                        <i class="fas fa-bell"></i>
+                    </span>
+                    <span>My Alerts</span>
+                </a>
+                {% endif %}
+                <a href="{% url 'mechbot_docs' %}" class="navbar-item">
+                    <span class="icon">
+                        <i class="fas fa-book" aria-hidden="true"></i>
+                    </span>
+                    <span>Documentation</span>
+                </a>
+
+            </div>
+            {% if authenticated %}
+            <div class="navbar-end">
+                <a href="{% url 'mechbot_main' %}" class="button is-dark is-medium is-vcentered">
+                    <span class="icon ">
+                        <figure class="image is-rounded">
+                            <img class="is-rounded"
+                                src="https://cdn.discordapp.com/avatars/{{user.id}}/{{user.avatar}}.png">
+                        </figure>
+                    </span>
+                    <span>{{user.username}}</span>
+                </a>
+            </div>
+            {% endif %}
+        </div>
+    </nav>
+
+    <section class="section">
+        <div class="container">
+            <div class="card">
+                <div class="card-content">
+                    <div class="columns is-mobile">
+                        <div class="column title has-text-centered">
+                            {{title}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    {% block 'body' %}
+    {% endblock %}
+</body>
+
+<footer>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            (document.querySelectorAll('.notification .delete') || []).forEach(($delete) => {
+                var $notification = $delete.parentNode;
+
+                $delete.addEventListener('click', () => {
+                    $notification.parentNode.removeChild($notification);
+                });
+            });
+        });
+    </script>
+</footer >
+</html >

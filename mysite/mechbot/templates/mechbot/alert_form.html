@@ -1,12 +1,37 @@
-{% load static %}
-<link rel="shortcut icon" href="{% static 'favicon.png' %}"/>
-
-<title>MechBot | {{ title }}</title>
-<h3>{{title}}<img src="https://cdn.discordapp.com/avatars/{{user.id}}/{{user.avatar}}.png" width="32" height="32" style="float:right"></h3>
-<hr>
-
+{% extends 'mechbot/base.html' %}
+{% block 'body' %}
 <form action="" method="POST">
     {% csrf_token %}
-    {{form}}
-    <input type="submit">
+    <section class="section">
+        <div class="container">
+            <div class="card">
+                <div class="card-content">                
+                    {% for field in form %}
+                    <div class="field">
+                        <label class="label">{{ field.label_tag }}</label>
+                        <div class="control is-primary">
+                            {{ field }}
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="section">
+        <div class="container">
+            <div class="columns">
+                <div class="column">
+                    <a class="button is-danger is-fullwidth is-medium" href="{% url 'mechbot_main' %}">Cancel</a>
+                </div>
+                <div class="column">
+                    <input class="button is-primary is-fullwidth is-medium" type="submit" value="Save">
+                </div>
+            </div>
+
+        </div>
+
+        </div>
+    </section>
 </form>
+{% endblock %}
