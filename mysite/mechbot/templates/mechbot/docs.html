@@ -2,6 +2,14 @@
 {% block 'body' %}
 <section class="section">
     <div class="container is-centered">
+        {% if not authenticated and next_page == '/alerts' %}
+        <div class="notification is-danger has-text-centered is-medium">
+            <button class="delete"></button>
+            <div class="content is-medium">
+                Log in with Discord first to set up alerts!
+            </div>
+        </div>
+        {% endif %}
         <div class="columns is-centered is-mobile">
             <div class="columns">
                 <figure class="image is-128x128">
@@ -20,11 +28,6 @@
             posts based on alerts that you set up. You'll
             recieve a DM on Discord from MechBot as soon as anything you're interested in is posted.</p>
         <p class="title is-large has-text-centered">Getting Started</p>
-        <div class="notification is-success has-text-centered is-medium">
-            Before you can receive DMs from MechBot, you have to join the <a
-                href="{% url 'discord_server_redirect' %}">Discord server</a> and <b>allow
-                direct messages from members</b> in the server Privacy Settings.<br>(It's a Discord thing meant to prevent spam.)
-        </div>
         <br>
         <div class="content">
             <div class="columns is-centered">
@@ -44,6 +47,14 @@
                         <span>Join MechBot's Discord Server</span>
                     </a>
                 </div>
+            </div>
+        </div>
+        <br>
+        <div class="notification is-success has-text-centered is-medium">
+            <div class="content is-medium">
+                MechBot can't DM you unless you join the <a
+                href="{% url 'discord_server_redirect' %}">Discord server</a> and <b>allow
+                direct messages from members</b> in the server Privacy Settings.<br>(It's a Discord thing meant to prevent spam.)
             </div>
         </div>
         <br>

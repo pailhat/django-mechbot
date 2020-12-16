@@ -13,7 +13,7 @@ from django_hosts.resolvers import reverse
 DISCORD_SERVER_INVITE = "https://discord.gg/bjUB2FnCE5"
 
 @login_required(login_url="mechbot_docs",)
-def index(request: HttpRequest):
+def mechbot_alerts(request: HttpRequest):
     if request.get_host == settings.HOST_URL:
         return redirect("https://" + settings.HOST_URL_MECHBOT + "/")
     print(request.user)
@@ -29,8 +29,12 @@ def index(request: HttpRequest):
         "alert_count": alert_count,
         "alert_limit": settings.ALERT_LIMIT
     }
-    return render(request, 'mechbot/index.html', context)
+    return render(request, 'mechbot/alerts.html', context)
 
+def index(request: HttpRequest):
+    if request.get_host == settings.HOST_URL:
+        return redirect("https://" + settings.HOST_URL_MECHBOT + "/")
+    return redirect("mechbot_docs")
 
 @login_required(login_url="mechbot_docs",)
 def new_alert(request: HttpRequest):
@@ -39,11 +43,11 @@ def new_alert(request: HttpRequest):
     
     user = request.user
     print(user)
-
+    
     # Don't allow people to make new alerts if they reach the limit
     alert_count = Alert.objects.filter(user_id=user.id).count()
     if alert_count >= settings.ALERT_LIMIT:
-        return redirect("mechbot_main")
+        return redirect("mechbot_alerts")
 
     form = AlertForm(label_suffix='')
     title = "New Alert"
@@ -52,7 +56,7 @@ def new_alert(request: HttpRequest):
         form.instance.user_id = user
         if form.is_valid():
             form.save()
-            return redirect("mechbot_main")
+            return redirect("mechbot_alerts")
     context = {"form": form, "title": title, "authenticated": True,}
     return render(request, 'mechbot/alert_form.html', context)
 
@@ -67,7 +71,7 @@ def update_alert(request, pk):
     print(alert.user_id)
     print(request.user)
     if str(alert.user_id) != str(request.user):
-        return redirect("mechbot_main")
+        return redirect("mechbot_alerts")
 
     form = AlertFormUpdate(instance=alert,label_suffix='')
     title = "Edit Alert"
@@ -75,7 +79,7 @@ def update_alert(request, pk):
         form = AlertFormUpdate(request.POST, instance=alert)
         if form.is_valid():
             form.save()
-            return redirect("mechbot_main")
+            return redirect("mechbot_alerts")
     context = {"form": form,"title": title, "authenticated": True,}
     return render(request, 'mechbot/alert_form.html', context)
 
@@ -90,12 +94,12 @@ def delete_alert(request, pk):
     print(request.user)
     
     if str(alert.user_id) != str(request.user):
-        return redirect("mechbot_main")
+        return redirect("mechbot_alerts")
 
     title = "Delete Alert"
     if request.method == 'POST':
         alert.delete()
-        return redirect("mechbot_main")
+        return redirect("mechbot_alerts")
 
     context = {"alert": alert, "title" : title, "authenticated": True,}
     return render(request, 'mechbot/delete_alert.html', context)
@@ -103,12 +107,13 @@ def delete_alert(request, pk):
 def mechbot_docs(request: HttpRequest):
     title = "MechBot Docs"
     user = request.user
+    next_page = request.GET.get('next')
     try:
         authenticated = request.user.is_authenticated(request)
     except:
         authenticated = False
 
-    context = {"title" : title, "authenticated": authenticated}
+    context = {"title" : title, "authenticated": authenticated, "next_page": next_page}
     return render(request, 'mechbot/docs.html', context)
 
 def discord_login(request: HttpRequest):
@@ -125,7 +130,7 @@ def discord_login_redirect(request: HttpRequest):
     discord_user = authenticate(request, user=user)
     print(discord_user)
     login(request, discord_user)
-    return redirect("mechbot_main")
+    return redirect("mechbot_alerts")
 
 def exchange_code(code: str):
     data =  {

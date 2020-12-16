@@ -3,7 +3,8 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
-    path('', views.index, name='mechbot_main'),
+    path('', views.index, name='index'),
+    path('alerts', views.mechbot_alerts, name='mechbot_alerts'),
     path('docs', views.mechbot_docs, name='mechbot_docs'),
     path('new_alert/', views.new_alert, name='new_alert'),
     path('discord/', views.discord_server_redirect, name='discord_server_redirect'),
