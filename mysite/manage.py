@@ -6,8 +6,9 @@ from dotenv import load_dotenv
 
 def main():
     """Run administrative tasks."""
-    project_folder = os.path.expanduser('~/django-app')
-    load_dotenv(os.path.join(project_folder,'.env'))
+    dotenv_path = os.path.join(os.path.dirname(__file__), 'mysite/.env')
+    load_dotenv(dotenv_path)
+
     os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'mysite.settings')
     try:
         from django.core.management import execute_from_command_line

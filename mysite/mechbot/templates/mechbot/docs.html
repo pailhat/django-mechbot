@@ -52,19 +52,28 @@
         <br>
         <div class="notification is-success has-text-centered is-medium">
             <div class="content is-medium">
-                MechBot can't DM you unless you join the <a
-                href="{% url 'discord_server_redirect' %}">Discord server</a> and <b>allow
-                direct messages from members</b> in the server Privacy Settings.<br>(It's a Discord thing meant to prevent spam.)
+                MechBot can't DM you unless you join the <a href="{% url 'discord_server_redirect' %}">Discord
+                    server</a> and <b>allow
+                    direct messages from members</b> in the server Privacy Settings.<br>(It's a Discord thing meant to
+                prevent spam.)
             </div>
         </div>
         <br>
         <p class="title is-large has-text-centered">Creating an Alert</p>
-        <p class="content is-medium">Create alerts at https://mechbot.panamahat.dev/alerts ("My Alerts" in navigation menu).</p>
+        <p class="content is-medium">Set up your alerts at
+            <a href="{% url 'mechbot_alerts' %}">
+                <span class="icon">
+                    <i class="fas fa-bell"></i>
+                </span>
+                <span>My Alerts</span>
+            </a>
+            .
+        </p>
         <p class="content is-medium">With each Alert, you are filtering new
             <code>Buying</code>/<code>Selling</code>/<code>Trading</code> posts from r/MechMarket
             that MechBot will DM to you. You can see real examples of how post titles are formatted on <a
                 target="_blank" href="https://www.reddit.com/r/mechmarket/new">r/MechMarket/new</a>.</p>
-        <p class="content is-medium">When adding an Alert for yourself you need to specify your filters for Origin, Has
+        <p class="content is-medium">When adding an Alert for yourself you can specify filters for Origin, Has
             [H],
             and Wants [W].</p>
         <p class="content is-medium"><u><b>Origin:</b></u> Location portion of the title.
@@ -78,8 +87,10 @@
         <p class="content is-medium"><u><b>Wants [W]:</b></u> Enter the item you're trying to sell if you are looking
             for buyers. Enter a payment method you have like PayPal if you're trying to buy something. Leave blank to
             consider all items/payment methods (no filter).</p>
-        <p class="content is-medium"><b>Up to 1 item in Has [H] and 1 item in Wants [W] per alert.</b> This is because bot
-            searches the appropriate section of the post title for the exact strings you entered to determine if it's a match.
+        <p class="content is-medium"><b>Up to 1 item in Has [H] and 1 item in Wants [W] per alert.</b> This is because
+            bot
+            searches the appropriate section of the post title for the exact strings you entered to determine if it's a
+            match.
             If you put multiple items in like <code>GMK DMG, GMK Olivia</code> for example, unless the post title had
             that text exactly you would not get an alert. In that case you should make one alert for <code>DMG</code>
             and another for <code>Olivia</code>.</p>
