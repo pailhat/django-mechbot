@@ -3,6 +3,7 @@
 
 <section class="section">
     <div class="container">
+        {% if not user.can_dm %}
         <div class="notification is-danger has-text-centered">
             <button class="delete"></button>
             Before you can receive DMs from MechBot, you have to join the <a
@@ -10,6 +11,7 @@
                 direct messages from members</b> in the server Privacy Settings.
                 <br>(Sorry, it's a Discord thing meant to prevent spam.)
         </div>
+        {% endif %}
         <div class="columns">
             {% if alerts %}
             <div class="column">

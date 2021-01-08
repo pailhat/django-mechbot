@@ -8,7 +8,7 @@ class DiscordUser(models.Model):
 
     id = models.BigIntegerField(primary_key=True)
     username = models.CharField(max_length=100)
-    avatar = models.CharField(max_length=100)
+    avatar = models.CharField(max_length=100,null=True)
     public_flags = models.IntegerField()
     flags = models.IntegerField()
     locale = models.CharField(max_length=100)
@@ -17,6 +17,7 @@ class DiscordUser(models.Model):
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
     is_superuser = models.BooleanField(default=False)
+    can_dm = models.BooleanField(default=False)
 
     def __str__(self):
         return str(self.id) + " " + str(self.username)
