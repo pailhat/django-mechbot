@@ -43,10 +43,10 @@
                 </a>
 
             </div>
-            {% if authenticated %}
             <div class="navbar-end">
+                {% if authenticated %}
                 <a href="{% url 'mechbot_alerts' %}" class="button is-dark is-medium is-vcentered is-fullwidth">
-                    <span class="icon ">
+                    <span class="icon">
                         <figure class="image is-rounded">
                             <img class="is-rounded"
                                 src="https://cdn.discordapp.com/avatars/{{user.id}}/{{user.avatar}}.png">
@@ -54,8 +54,15 @@
                     </span>
                     <span>{{user.username}}</span>
                 </a>
-            </div>
-            {% endif %}
+                {% else %}
+                <a href="{% url 'oauth2_login' %}" class="button is-light is-medium is-vcentered is-fullwidth">
+                    <span class="icon">
+                        <i class="fab fa-discord"></i>
+                    </span>
+                    <span>Log in with Discord</span>
+                </a>
+                {% endif %}
+            </div>    
         </div>
     </nav>
 
