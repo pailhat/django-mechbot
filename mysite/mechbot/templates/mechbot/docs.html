@@ -1,26 +1,21 @@
 {% extends 'mechbot/base.html' %}
 {% block 'body' %}
+{% if not authenticated and next_page == '/alerts' %}
 <section class="section">
+
     <div class="container is-centered">
-        {% if not authenticated and next_page == '/alerts' %}
+
         <div class="notification is-danger has-text-centered is-medium">
             <button class="delete"></button>
             <div class="content is-medium">
                 Log in with Discord first to set up alerts!
             </div>
         </div>
-        {% endif %}
-        <div class="columns is-centered is-mobile">
-            <div class="columns">
-                <figure class="image is-128x128">
-                    <img class="is-rounded is-centered"
-                        src="https://cdn.discordapp.com/emojis/780597682195922944.gif">
-                </figure>
-            </div>
-        </div>
-    </div>
-</section>
 
+    </div>
+
+</section>
+{% endif %}
 <section class="section">
     <div class="container">
         <p class="content is-medium"> MechBot is a Discord bot that helps you find things you're looking for on
@@ -60,7 +55,7 @@
         </div>
         <br>
         <p class="title is-large has-text-centered">Creating an Alert</p>
-        <p class="content is-medium">Set up your alerts at
+        <p class="content is-medium">Once you've signed in with Discord, set up your alerts at
             <a href="{% url 'mechbot_alerts' %}">
                 <span class="icon">
                     <i class="fas fa-bell"></i>
@@ -110,5 +105,16 @@
     </div>
 </section>
 
+<section class="section">
+    <div class="container is-centered">
+        <div class="columns is-centered is-mobile">
+            <div class="columns">
+                <figure class="image is-128x128">
+                    <img class="is-rounded is-centered" src="https://cdn.discordapp.com/emojis/780597682195922944.gif">
+                </figure>
+            </div>
+        </div>
+    </div>
+</section>
 
 {% endblock %}
